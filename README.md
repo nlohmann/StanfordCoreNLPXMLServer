@@ -1,5 +1,7 @@
 # Stanford CoreNLP XML Server
 
+[![Build Status](https://travis-ci.org/nlohmann/StanfordCoreNLPXMLServer.png)](https://travis-ci.org/nlohmann/StanfordCoreNLPXMLServer)
+
 ## About
 
 This software offers the functionality of the [Stanford CoreNLP](http://nlp.stanford.edu/software/corenlp.shtml) as HTTP-XML-Server. This avoids the time-consuming initialization every time CoreNLP is started. It is very similar to projects like [this Python wrapper](https://github.com/relwell/stanford-corenlp-python).
@@ -100,11 +102,11 @@ The server will be listening at <http://localhost:8080>. The text you want to an
 
 1. Clone the repository:
     
-        git clone https://github.com/nlohmann/corenlpxmlserver.git
+        git clone https://github.com/nlohmann/StanfordCoreNLPXMLServer.git
 
 2. Download and install the third party libraries:
     
-        cd corenlpxmlserver
+        cd StanfordCoreNLPXMLServer
         ant libs
 
 3. Compile the JAR file:
