@@ -10,7 +10,7 @@ This software offers the functionality of the [Stanford CoreNLP](http://nlp.stan
 
 The server will be listening at <http://localhost:8080>. The text you want to analyze needs to be POSTed as field `text`:
 
-    curl --data 'text="Hello world!"' http://localhost:8080
+     curl --data 'text=Hello world!' http://localhost:8080
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -21,75 +21,59 @@ The server will be listening at <http://localhost:8080>. The text you want to an
       <sentence id="1">
         <tokens>
           <token id="1">
-            <word>``</word>
-            <lemma>``</lemma>
-            <CharacterOffsetBegin>0</CharacterOffsetBegin>
-            <CharacterOffsetEnd>1</CharacterOffsetEnd>
-            <POS>``</POS>
-            <NER>O</NER>
-          </token>
-          <token id="2">
             <word>Hello</word>
             <lemma>hello</lemma>
-            <CharacterOffsetBegin>1</CharacterOffsetBegin>
-            <CharacterOffsetEnd>6</CharacterOffsetEnd>
+            <CharacterOffsetBegin>0</CharacterOffsetBegin>
+            <CharacterOffsetEnd>5</CharacterOffsetEnd>
             <POS>UH</POS>
             <NER>O</NER>
           </token>
-          <token id="3">
+          <token id="2">
             <word>world</word>
             <lemma>world</lemma>
-            <CharacterOffsetBegin>7</CharacterOffsetBegin>
-            <CharacterOffsetEnd>12</CharacterOffsetEnd>
+            <CharacterOffsetBegin>6</CharacterOffsetBegin>
+            <CharacterOffsetEnd>11</CharacterOffsetEnd>
             <POS>NN</POS>
             <NER>O</NER>
           </token>
-          <token id="4">
+          <token id="3">
             <word>!</word>
             <lemma>!</lemma>
-            <CharacterOffsetBegin>12</CharacterOffsetBegin>
-            <CharacterOffsetEnd>13</CharacterOffsetEnd>
+            <CharacterOffsetBegin>11</CharacterOffsetBegin>
+            <CharacterOffsetEnd>12</CharacterOffsetEnd>
             <POS>.</POS>
             <NER>O</NER>
           </token>
-          <token id="5">
-            <word>''</word>
-            <lemma>''</lemma>
-            <CharacterOffsetBegin>13</CharacterOffsetBegin>
-            <CharacterOffsetEnd>14</CharacterOffsetEnd>
-            <POS>''</POS>
-            <NER>O</NER>
-          </token>
         </tokens>
-        <parse>(ROOT (S (`` ``) (VP (UH Hello) (NP (NN world))) (. !) ('' ''))) </parse>
+        <parse>(ROOT (S (VP (NP (INTJ (UH Hello)) (NP (NN world)))) (. !))) </parse>
         <dependencies type="basic-dependencies">
           <dep type="root">
             <governor idx="0">ROOT</governor>
-            <dependent idx="3">world</dependent>
+            <dependent idx="2">world</dependent>
           </dep>
-          <dep type="dep">
-            <governor idx="3">world</governor>
-            <dependent idx="2">Hello</dependent>
+          <dep type="discourse">
+            <governor idx="2">world</governor>
+            <dependent idx="1">Hello</dependent>
           </dep>
         </dependencies>
         <dependencies type="collapsed-dependencies">
           <dep type="root">
             <governor idx="0">ROOT</governor>
-            <dependent idx="3">world</dependent>
+            <dependent idx="2">world</dependent>
           </dep>
-          <dep type="dep">
-            <governor idx="3">world</governor>
-            <dependent idx="2">Hello</dependent>
+          <dep type="discourse">
+            <governor idx="2">world</governor>
+            <dependent idx="1">Hello</dependent>
           </dep>
         </dependencies>
         <dependencies type="collapsed-ccprocessed-dependencies">
           <dep type="root">
             <governor idx="0">ROOT</governor>
-            <dependent idx="3">world</dependent>
+            <dependent idx="2">world</dependent>
           </dep>
-          <dep type="dep">
-            <governor idx="3">world</governor>
-            <dependent idx="2">Hello</dependent>
+          <dep type="discourse">
+            <governor idx="2">world</governor>
+            <dependent idx="1">Hello</dependent>
           </dep>
         </dependencies>
       </sentence>
