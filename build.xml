@@ -1,0 +1,60 @@
+<project name="StanfordCoreNLPXMLServer">
+    <property name="src.dir"     value="src"/>
+
+    <property name="build.dir"   value="build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="jar.dir"     value="${build.dir}/jar"/>
+    <property name="lib.dir"     value="lib"/>
+
+    <property name="main-class"  value="StanfordCoreNLPXMLServer"/>
+
+    <path id="classpath">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+    </path>
+
+    <target name="clean" description="Delete all generated files.">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="libs" depends="simple, stanford" description="Download and compile all required 3rd party libraries." />
+
+    <target name="simple">
+        <get src="http://downloads.sourceforge.net/project/simpleweb/simpleweb/5.1.6/simple-5.1.6.zip" dest="simple-5.1.6.zip" />
+        <unzip src="simple-5.1.6.zip" dest="." />
+        <ant dir="simple-5.1.6" target="build" />
+        <move file="simple-5.1.6/jar/simple-5.1.6.jar" todir="${lib.dir}" />
+        <delete dir="simple-5.1.6" />
+        <delete file="simple-5.1.6.zip" />
+    </target>
+
+    <target name="stanford">
+        <get src="http://nlp.stanford.edu/software/stanford-corenlp-full-2013-06-20.zip" dest="stanford-corenlp-full-2013-06-20.zip" />
+        <unzip src="stanford-corenlp-full-2013-06-20.zip" dest="." />
+        <move todir="${lib.dir}">
+            <fileset dir="stanford-corenlp-full-2013-06-20">
+                <include name="**/*.jar" />
+            </fileset>
+        </move>
+        <delete dir="stanford-corenlp-full-2013-06-20" />
+        <delete file="stanford-corenlp-full-2013-06-20.zip" />
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false" classpathref="classpath" />
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="${jar.dir}"/>
+        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+            </manifest>
+            <zipgroupfileset dir="${lib.dir}" includes="**/*.jar"/>
+        </jar>
+    </target>
+
+    <target name="run" depends="jar">
+        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true" maxmemory="1024m" />
+    </target>
+</project>
