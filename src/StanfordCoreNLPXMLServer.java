@@ -50,16 +50,16 @@ public class StanfordCoreNLPXMLServer implements Container {
 
     public void handle(Request request, Response response) {
         try {
-            PrintStream body = response.getPrintStream();
             long time = System.currentTimeMillis();
    
             response.setValue("Content-Type", "text/xml; charset=\"utf-8\"");
-            response.setValue("Server", "Stanford CoreNLP Server/1.0 (Simple 5.1.6)");
+            response.setValue("Server", "Stanford CoreNLP XML Server/1.0 (Simple 5.1.6)");
             response.setDate("Date", time);
             response.setDate("Last-Modified", time);
    
             // pass "text" POST query to Stanford Core NLP parser
             String text = request.getQuery().get("text");  
+            PrintStream body = response.getPrintStream();
             body.println(parse(text));
             body.close();
         } catch(Exception e) {
@@ -67,16 +67,23 @@ public class StanfordCoreNLPXMLServer implements Container {
         }
     } 
 
-    public static void main(String[] list) throws Exception {
-        /// initialize the Stanford Core NLP
-        pipeline = new StanfordCoreNLP();
-        System.out.println("Initialized server at port " + port + ".");
+    public static void main(String args[]) throws Exception {
+        // use port if given
+        try {
+            port = Integer.parseInt(args[0]);
+        } catch(Exception e) {
+        }
 
+        // initialize the Stanford Core NLP
+        pipeline = new StanfordCoreNLP();
+
+        // start the server
         Container container = new StanfordCoreNLPXMLServer();
         Server server = new ContainerServer(container);
         Connection connection = new SocketConnection(server);
         SocketAddress address = new InetSocketAddress(port);
-
         connection.connect(address);
+
+        System.out.println("Initialized server at port " + port + ".");
     }
 }
