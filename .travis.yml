@@ -3,5 +3,7 @@ language: java
 install: ant libs jar
 
 jdk:
-  - oraclejdk6
   - openjdk6
+  - openjdk7
+  - oraclejdk7
+  - oraclejdk6

@@ -121,7 +121,7 @@ The server will be listening at <http://localhost:8080>. The text you want to an
 
 ## Prerequisites
 
-- Java 1.6 or later
+- [Oracle JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html) or [OpenJDK](http://openjdk.java.net/install/) version 6 or later
 - [Apache Ant](http://ant.apache.org)
 
 ## Third Party Libraries
