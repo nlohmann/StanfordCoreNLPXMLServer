@@ -19,6 +19,8 @@
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import edu.stanford.nlp.io.*;
 import edu.stanford.nlp.ling.*;
@@ -36,8 +38,9 @@ import org.simpleframework.transport.connect.Connection;
 import org.simpleframework.transport.connect.SocketConnection;
 
 public class StanfordCoreNLPXMLServer implements Container {
-    static StanfordCoreNLP pipeline;
-    static int port = 8080;
+    private static StanfordCoreNLP pipeline;
+    private static int port = 8080;
+    private static final Logger log = Logger.getLogger( StanfordCoreNLPXMLServer.class.getName() );
 
     // an interface to the Stanford Core NLP
     public String parse(String s) throws java.io.IOException {
@@ -50,6 +53,7 @@ public class StanfordCoreNLPXMLServer implements Container {
 
     public void handle(Request request, Response response) {
         try {
+            log.info("Request from " + request.getClientAddress().getHostName());
             long time = System.currentTimeMillis();
    
             response.setValue("Content-Type", "text/xml");
@@ -63,7 +67,7 @@ public class StanfordCoreNLPXMLServer implements Container {
             body.println(parse(text));
             body.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            log.log( Level.SEVERE, "Exception", e);
         }
     } 
 
@@ -72,6 +76,7 @@ public class StanfordCoreNLPXMLServer implements Container {
         try {
             port = Integer.parseInt(args[0]);
         } catch(Exception e) {
+            // silently keep port at 8080
         }
 
         // initialize the Stanford Core NLP
@@ -84,6 +89,6 @@ public class StanfordCoreNLPXMLServer implements Container {
         SocketAddress address = new InetSocketAddress(port);
         connection.connect(address);
 
-        System.out.println("Initialized server at port " + port + ".");
+        log.info("Initialized server at port " + port + ".");
     }
 }
