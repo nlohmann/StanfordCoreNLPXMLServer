@@ -41,6 +41,7 @@ public class StanfordCoreNLPXMLServer implements Container {
     private static StanfordCoreNLP pipeline;
     private static int port = 8080;
     private static final Logger log = Logger.getLogger( StanfordCoreNLPXMLServer.class.getName() );
+    private static int total_requests = 0;
 
     // an interface to the Stanford Core NLP
     public String parse(String s) throws java.io.IOException {
@@ -53,7 +54,8 @@ public class StanfordCoreNLPXMLServer implements Container {
 
     public void handle(Request request, Response response) {
         try {
-            log.info("Request from " + request.getClientAddress().getHostName());
+            int request_number = ++total_requests;
+            log.info("Request " + request_number + " from " + request.getClientAddress().getHostName());
             long time = System.currentTimeMillis();
    
             response.setValue("Content-Type", "text/xml");
@@ -66,6 +68,9 @@ public class StanfordCoreNLPXMLServer implements Container {
             PrintStream body = response.getPrintStream();
             body.println(parse(text));
             body.close();
+
+            long time2 = System.currentTimeMillis();
+            log.info("Request " + request_number + " done (" + (time2-time) + " ms)");
         } catch(Exception e) {
             log.log( Level.SEVERE, "Exception", e);
         }
