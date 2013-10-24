@@ -105,6 +105,10 @@ Note you can olso try this [online](http://nlp.stanford.edu:8080/corenlp/process
 
 5. The server is now waiting on <http://localhost:8080> for HTTP POST requests. Note the initialization can take a few minutes, because several modules and resources of Stanford CoreNLP need to be loaded.
 
+    You can also choose a port:
+
+        ant run -Dport=9000
+
 ## Prerequisites
 
 - [Oracle JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html) or [OpenJDK](http://openjdk.java.net/install/) version 6 or later
