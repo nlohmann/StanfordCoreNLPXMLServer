@@ -82,6 +82,8 @@ The server will be listening at <http://localhost:8080>. The text you want to an
 </root>
 ```
 
+Note you can olso try this [online](http://nlp.stanford.edu:8080/corenlp/process) at Stanford University. Make sure you choose "XML" as output format. The output you get there only slightly differs from the XML here.
+
 ## Installation
 
 1. Clone the repository:
